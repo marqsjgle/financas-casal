@@ -1,7 +1,7 @@
 import React from 'react';
 import { Outlet, NavLink, Navigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import { PlusCircle, List, PieChart } from 'lucide-react';
+import { PlusCircle, List, PieChart, Settings } from 'lucide-react';
 
 export function Layout() {
   const { user } = useAuth();
@@ -54,6 +54,18 @@ export function Layout() {
           >
             <PieChart className="w-6 h-6" />
             <span className="text-[10px] font-medium">Dashboard</span>
+          </NavLink>
+
+          <NavLink
+            to="/configuracoes"
+            className={({ isActive }) =>
+              `flex flex-col items-center justify-center w-full h-full space-y-1 ${
+                isActive ? 'text-indigo-600' : 'text-gray-500 hover:text-gray-900'
+              }`
+            }
+          >
+            <Settings className="w-6 h-6" />
+            <span className="text-[10px] font-medium">Config</span>
           </NavLink>
         </div>
       </nav>
