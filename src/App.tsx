@@ -16,6 +16,7 @@ import { Dashboard } from './pages/Dashboard';
 import { Configuracoes } from './pages/Configuracoes';
 import { Cartoes } from './pages/Cartoes';
 import { Faturas } from './pages/Faturas';
+import { Categorias } from './pages/Categorias';
 import { Toaster } from 'sonner';
 
 export default function App() {
@@ -34,6 +35,7 @@ export default function App() {
             <Route path="/configuracoes" element={<Configuracoes />} />
             <Route path="/cartoes" element={<Cartoes />} />
             <Route path="/faturas" element={<Faturas />} />
+            <Route path="/categorias" element={<Categorias />} />
           </Route>
         </Routes>
       </Router>

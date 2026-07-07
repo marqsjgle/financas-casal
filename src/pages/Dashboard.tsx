@@ -23,7 +23,7 @@ export function Dashboard() {
           .select(`
             valor,
             categorias (nome, cor),
-            cartoes (nome)
+            cartoes!fk_cartao (nome)
           `)
           .gte('data', start)
           .lte('data', end);

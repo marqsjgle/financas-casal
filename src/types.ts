@@ -66,6 +66,7 @@ export interface Database {
           forma_pagamento: 'debito' | 'credito' | 'pix' | 'dinheiro'
           criado_por: string
           criado_em: string
+          numero_parcelas: number
         }
         Insert: {
           id?: string
@@ -77,6 +78,7 @@ export interface Database {
           forma_pagamento: 'debito' | 'credito' | 'pix' | 'dinheiro'
           criado_por: string
           criado_em?: string
+          numero_parcelas?: number
         }
         Update: {
           id?: string
@@ -88,6 +90,7 @@ export interface Database {
           forma_pagamento?: 'debito' | 'credito' | 'pix' | 'dinheiro'
           criado_por?: string
           criado_em?: string
+          numero_parcelas?: number
         }
       }
     }

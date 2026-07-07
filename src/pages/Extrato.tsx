@@ -6,6 +6,7 @@ import { ptBR } from 'date-fns/locale';
 import { toast } from 'sonner';
 import { Database } from '../types';
 import { DynamicIcon } from '../components/DynamicIcon';
+import { formatarMoeda } from '../lib/format';
 
 type Lancamento = Database['public']['Tables']['lancamentos']['Row'] & {
   categorias?: { nome: string; cor: string; icone: string };
@@ -25,7 +26,7 @@ export function Extrato() {
           .select(`
             *,
             categorias (nome, cor, icone),
-            cartoes (nome)
+            cartoes!fk_cartao (nome)
           `)
           .order('data', { ascending: false })
           .order('criado_em', { ascending: false });
@@ -148,6 +149,13 @@ export function Extrato() {
                         <p className="text-xs text-gray-500">
                           {item.categorias?.nome} • {item.forma_pagamento}
                           {item.cartoes && ` • ${item.cartoes.nome}`}
+                          {(item.numero_parcelas || 1) > 1 && (
+                            <span className="text-gray-400">
+                              {' '}
+                              ({item.numero_parcelas}x de{' '}
+                              {formatarMoeda(Number(item.valor) / (item.numero_parcelas || 1))})
+                            </span>
+                          )}
                         </p>
                       </div>
                     </div>

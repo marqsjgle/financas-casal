@@ -4,6 +4,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { toast } from 'sonner';
 import { format } from 'date-fns';
 import { Database } from '../types';
+import { formatarMoeda } from '../lib/format';
 
 type Categoria = Database['public']['Tables']['categorias']['Row'];
 type Cartao = Database['public']['Tables']['cartoes']['Row'];
@@ -22,7 +23,10 @@ export function NovoLancamento() {
   const [categoriaId, setCategoriaId] = useState('');
   const [cartaoId, setCartaoId] = useState('');
   const [formaPagamento, setFormaPagamento] = useState<'debito' | 'credito' | 'pix' | 'dinheiro'>('pix');
+  const [numeroParcelas, setNumeroParcelas] = useState(1);
   const [data, setData] = useState(format(new Date(), 'yyyy-MM-dd'));
+
+  const valorNumerico = valor ? Number(valor) : 0;
 
   useEffect(() => {
     async function loadData() {
@@ -80,6 +84,7 @@ export function NovoLancamento() {
         forma_pagamento: formaPagamento,
         data,
         criado_por: user.id,
+        numero_parcelas: formaPagamento === 'credito' ? numeroParcelas : 1,
       } as any;
       const { error } = await supabase.from('lancamentos').insert(payload);
 
@@ -92,6 +97,7 @@ export function NovoLancamento() {
       setDescricao('');
       setFormaPagamento('pix');
       setCartaoId('');
+      setNumeroParcelas(1);
       setData(format(new Date(), 'yyyy-MM-dd'));
       
     } catch (error: any) {
@@ -168,7 +174,12 @@ export function NovoLancamento() {
               <button
                 key={forma}
                 type="button"
-                onClick={() => setFormaPagamento(forma)}
+                onClick={() => {
+                  setFormaPagamento(forma);
+                  if (forma !== 'credito') {
+                    setNumeroParcelas(1);
+                  }
+                }}
                 className={`py-2 px-3 text-sm font-medium rounded-lg capitalize border transition-colors ${
                   formaPagamento === forma
                     ? 'bg-indigo-50 border-indigo-200 text-indigo-700'
@@ -194,6 +205,25 @@ export function NovoLancamento() {
               <option value="">Selecione um cartão</option>
               {cartoes.filter(c => c.tipo === formaPagamento).map(cartao => (
                 <option key={cartao.id} value={cartao.id}>{cartao.nome}</option>
+              ))}
+            </select>
+          </div>
+        )}
+
+        {formaPagamento === 'credito' && (
+          <div className="space-y-2">
+            <label className="block text-sm font-medium text-gray-700">Número de parcelas</label>
+            <select
+              value={numeroParcelas}
+              onChange={(e) => setNumeroParcelas(Number(e.target.value))}
+              className="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
+            >
+              {Array.from({ length: 24 }, (_, i) => i + 1).map((n) => (
+                <option key={n} value={n}>
+                  {n === 1
+                    ? 'À vista (1x)'
+                    : `${n}x de ${formatarMoeda(valorNumerico > 0 ? valorNumerico / n : 0)}`}
+                </option>
               ))}
             </select>
           </div>

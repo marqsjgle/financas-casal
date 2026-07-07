@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ChevronRight, CreditCard, Edit2, LogOut, ReceiptText, User } from 'lucide-react';
+import { ChevronRight, CreditCard, Edit2, LogOut, ReceiptText, Tag, User } from 'lucide-react';
 import { toast } from 'sonner';
 import { useAuth } from '../contexts/AuthContext';
 import { supabase } from '../lib/supabase';
@@ -108,6 +108,7 @@ function SecaoPerfil() {
 
 function SecaoGestao() {
   const itens = [
+    { to: '/categorias', icone: Tag, titulo: 'Categorias', descricao: 'Gerencie suas categorias' },
     { to: '/cartoes', icone: CreditCard, titulo: 'Cartões', descricao: 'Gerencie seus cartões' },
     { to: '/faturas', icone: ReceiptText, titulo: 'Faturas', descricao: 'Gastos de crédito por ciclo' },
   ];
