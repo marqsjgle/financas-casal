@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Edit2, LogOut, User } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { ChevronRight, CreditCard, Edit2, LogOut, ReceiptText, User } from 'lucide-react';
 import { toast } from 'sonner';
 import { useAuth } from '../contexts/AuthContext';
 import { supabase } from '../lib/supabase';
@@ -105,6 +106,30 @@ function SecaoPerfil() {
   );
 }
 
+function SecaoGestao() {
+  const itens = [
+    { to: '/cartoes', icone: CreditCard, titulo: 'Cartões', descricao: 'Gerencie seus cartões' },
+    { to: '/faturas', icone: ReceiptText, titulo: 'Faturas', descricao: 'Gastos de crédito por ciclo' },
+  ];
+
+  return (
+    <section className="bg-white rounded-2xl shadow-sm border border-gray-100 divide-y divide-gray-50">
+      {itens.map(({ to, icone: Icone, titulo, descricao }) => (
+        <Link key={to} to={to} className="flex items-center gap-3 p-4 hover:bg-gray-50 transition-colors">
+          <div className="w-10 h-10 rounded-full bg-indigo-50 text-indigo-600 flex items-center justify-center shrink-0">
+            <Icone className="w-5 h-5" />
+          </div>
+          <div className="flex-1 min-w-0">
+            <p className="font-medium text-gray-900">{titulo}</p>
+            <p className="text-sm text-gray-500 truncate">{descricao}</p>
+          </div>
+          <ChevronRight className="w-5 h-5 text-gray-300 shrink-0" />
+        </Link>
+      ))}
+    </section>
+  );
+}
+
 function SecaoLogout() {
   const { signOut } = useAuth();
 
@@ -138,6 +163,7 @@ export function Configuracoes() {
       </div>
 
       <SecaoPerfil />
+      <SecaoGestao />
       <SecaoLogout />
     </div>
   );

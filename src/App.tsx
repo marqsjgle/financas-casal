@@ -14,6 +14,8 @@ import { NovoLancamento } from './pages/NovoLancamento';
 import { Extrato } from './pages/Extrato';
 import { Dashboard } from './pages/Dashboard';
 import { Configuracoes } from './pages/Configuracoes';
+import { Cartoes } from './pages/Cartoes';
+import { Faturas } from './pages/Faturas';
 import { Toaster } from 'sonner';
 
 export default function App() {
@@ -30,6 +32,8 @@ export default function App() {
             <Route path="/extrato" element={<Extrato />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/configuracoes" element={<Configuracoes />} />
+            <Route path="/cartoes" element={<Cartoes />} />
+            <Route path="/faturas" element={<Faturas />} />
           </Route>
         </Routes>
       </Router>

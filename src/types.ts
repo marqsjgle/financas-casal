@@ -35,18 +35,24 @@ export interface Database {
           nome: string
           tipo: 'debito' | 'credito'
           cor: string
+          dia_fechamento: number | null
+          dia_vencimento: number | null
         }
         Insert: {
           id?: string
           nome: string
           tipo: 'debito' | 'credito'
           cor: string
+          dia_fechamento?: number | null
+          dia_vencimento?: number | null
         }
         Update: {
           id?: string
           nome?: string
           tipo?: 'debito' | 'credito'
           cor?: string
+          dia_fechamento?: number | null
+          dia_vencimento?: number | null
         }
       }
       lancamentos: {
